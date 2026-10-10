@@ -364,7 +364,23 @@ html[data-skin=dark] .tabbar a.on{color:#0a84ff;background:rgba(118,118,128,.28)
 .tabbar-mask{display:none}
 @media (max-width:899px){
   .tabbar-mask{display:block;position:fixed;left:0;right:0;bottom:0;height:calc(62px + 10px + 16px + env(safe-area-inset-bottom));z-index:19;pointer-events:none;
-    background:linear-gradient(to bottom,transparent 0,var(--bg) 14px,var(--bg) 100%)}
+    background:var(--bg)}
 }
 html[data-skin=light] .tabbar-mask{--bg:#f2f2f7}
 html[data-skin=dark] .tabbar-mask{--bg:#000}
+
+/* v3.4 手机端紧凑一点, 首屏不压到导航栏; 遮罩改为纯色无渐变 */
+@media (max-width:899px){
+  .main{padding-top:calc(6px + env(safe-area-inset-top))}
+  .top{margin-bottom:10px}
+  .card{margin-bottom:12px}
+  .grid2{gap:12px}
+  .grid2 .card{margin-bottom:0}
+  .grid2{margin-bottom:12px}
+  .stat{padding:12px 14px}
+  .stat .sh{margin-bottom:8px}
+  .hero{padding:16px 16px 14px}
+  .subc{padding:16px 16px 14px}
+  .subh{margin-bottom:12px}
+  .subgo{min-height:50px}
+}
