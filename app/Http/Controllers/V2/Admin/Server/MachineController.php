@@ -201,7 +201,7 @@ class MachineController extends Controller
 
     private function buildInstallCommand(Request $request, ServerMachine $machine): string
     {
-        $panelUrl = rtrim((string) (admin_setting('app_url') ?: $request->getSchemeAndHttpHost()), '/');
+        $panelUrl = rtrim((string) (admin_setting('node_panel_url') ?: admin_setting('app_url') ?: $request->getSchemeAndHttpHost()), '/');
         $installerUrl = 'https://raw.githubusercontent.com/chentiti888/xboard-node/main/install.sh';
 
         return sprintf(
