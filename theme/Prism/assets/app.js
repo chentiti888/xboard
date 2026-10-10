@@ -33,9 +33,26 @@ var IC = {
   reload: '<path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/>',
   users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14a6.5 6.5 0 0 1 3.5 6"/>',
   pct: '<path d="M19 5L5 19M7 8a1.5 1.5 0 1 0 0-.01M17 17a1.5 1.5 0 1 0 0-.01"/>',
+  link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+  copy: '<rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',
+  qr: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v.01M14 21h3M21 17v4"/>',
+  dl: '<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',
+  bolt: '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
   book: '<path d="M4 4h10a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4zM4 16a4 4 0 0 1 4-4h10"/>'
 };
 function ico(n) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + IC[n] + '</svg>'; }
+
+function subShow(u) {
+  var m = String(u).match(/^https?:\/\/([^\/]+)(\/.*)?$/); if (!m) return u;
+  var p = m[2] || ''; if (p.length > 16) p = p.slice(0, 7) + '…' + p.slice(-4);
+  return m[1] + p;
+}
+function subCard(url) {
+  return '<div class="card subc"><div class="subh"><div><b>订阅链接</b><small>导入到客户端即可使用,请勿分享给他人</small></div><span class="subtag">通用订阅</span></div>' +
+    '<button class="btn pri blk subgo" data-imp>一键导入</button>' +
+    '<div class="subact"><button class="btn" data-copy>复制链接</button><button class="btn" data-qr>二维码</button>' +
+    (S.download_url ? '<a class="btn" href="' + esc(S.download_url) + '" target="_blank" rel="noopener">下载客户端</a>' : '') + '</div></div>';
+}
 
 function statCard(ic, c, k, v, u) { return '<div class="card stat"><div class="sh"><span class="chip" style="--c:var(--c' + c + ')">' + ico(ic) + '</span><span class="k">' + k + '</span></div><div class="v">' + v + '</div>' + (u ? '<div class="u">' + u + '</div>' : '') + '</div>'; }
 
@@ -221,7 +238,7 @@ route(/^\/$/, function () {
       statCard('wallet', 2, '账户余额', money(info.balance), '佣金 ' + money(info.commission_balance)) +
       statCard('device', 3, '设备限制', (sub.device_limit || info.device_limit || '不限'), '同时在线') +
       statCard('reload', 4, '下次重置', (sub.reset_day != null ? sub.reset_day + ' 天后' : '—'), '流量周期') + '</div>' +
-      (hasPlan ? '<div class="card"><h3>订阅链接</h3><div class="urlbox mono">' + esc(sub.subscribe_url) + '</div><div class="btns" style="margin-top:12px"><button class="btn" data-copy>复制链接</button><button class="btn pri" data-imp>一键导入</button><button class="btn" data-qr>二维码</button></div>' + (S.download_url ? '<a class="btn blk sm" style="margin-top:10px" href="' + esc(S.download_url) + '" target="_blank" rel="noopener">下载客户端</a>' : '') + '</div>'
+      (hasPlan ? subCard(sub.subscribe_url)
         : '<div class="card"><h3>开始使用</h3><p class="mut">你还没有可用的套餐,选购后即可获得订阅链接。</p><a class="btn pri blk" href="#/plans">选购套餐</a></div>') +
       ((stat && (stat[0] || stat[1])) ? '<div class="card"><a class="row" href="#/orders"><span>待支付订单 <b>' + (stat[0] || 0) + '</b> · 未处理工单 <b>' + (stat[1] || 0) + '</b></span><span class="mut">›</span></a></div>' : '');
     return {

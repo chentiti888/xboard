@@ -185,3 +185,14 @@ html[data-skin=dark] .hero{background:linear-gradient(135deg,#0e7490 0%,#2563eb 
 .main{padding-bottom:calc(var(--nav) + 64px + env(safe-area-inset-bottom))}
 html[data-skin=dark] .tabbar{background:#070b14;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 -10px 24px rgba(0,0,0,.45)}
 html[data-skin=light] .tabbar{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 -8px 20px rgba(15,23,42,.08)}
+
+/* v1.6 订阅卡片 */
+.subc{padding:20px 18px 18px}
+.subh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+.subh b{display:block;font-size:17px;letter-spacing:.2px}
+.subh small{display:block;color:var(--mut);font-size:12.5px;margin-top:4px;line-height:1.5}
+.subtag{flex:none;font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px;color:var(--ac);background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.28);white-space:nowrap}
+html[data-skin=light] .subtag{color:#111827;background:#eef0f4;border-color:#dfe3ea}
+.subgo{min-height:54px;font-size:16.5px;letter-spacing:1px;border-radius:15px}
+.subact{display:flex;gap:10px;margin-top:12px}
+.subact .btn{flex:1;min-width:0;min-height:46px;padding:10px 6px;font-size:14px;white-space:nowrap}
