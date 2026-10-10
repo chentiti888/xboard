@@ -85,8 +85,8 @@ function logout(silent) { auth = null; LS.del('prism_auth'); cache = {}; locatio
 /* ---------- modal ---------- */
 function sheet(html) {
   var m = document.createElement('div'); m.className = 'mask';
-  m.innerHTML = '<div class="sheet">' + html + '</div>';
-  m.addEventListener('click', function (e) { if (e.target === m) m.remove(); });
+  m.innerHTML = '<div class="sheet"><button class="sx" aria-label="关闭">✕</button>' + html + '</div>';
+  m.addEventListener('click', function (e) { if (e.target === m || e.target.closest('.sx')) m.remove(); });
   document.body.appendChild(m); return m;
 }
 function busy(btn, fn) { btn.disabled = true; var t = btn.textContent; return Promise.resolve().then(fn).catch(function (e) { toast(e.message); }).then(function () { btn.disabled = false; btn.textContent = t; }); }

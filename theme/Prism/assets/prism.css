@@ -197,3 +197,8 @@ html[data-skin=light] .subtag{color:#111827;background:#eef0f4;border-color:#dfe
 .subact{display:flex;gap:10px;margin-top:12px}
 .subact .btn{flex:1;min-width:0;min-height:46px;padding:10px 6px;font-size:14px;white-space:nowrap}
 a.opt{color:var(--tx);text-decoration:none}a.opt b{color:var(--tx)}
+/* v2.0 弹窗关闭按钮 */
+.sheet{position:relative}
+.sheet h3{padding-right:44px}
+.sx{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:var(--card2);color:var(--mut);font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;z-index:2}
+.sx:active{transform:scale(.94)}
