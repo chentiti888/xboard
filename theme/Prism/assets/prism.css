@@ -196,3 +196,4 @@ html[data-skin=light] .subtag{color:#111827;background:#eef0f4;border-color:#dfe
 .subgo{min-height:54px;font-size:16.5px;letter-spacing:1px;border-radius:15px}
 .subact{display:flex;gap:10px;margin-top:12px}
 .subact .btn{flex:1;min-width:0;min-height:46px;padding:10px 6px;font-size:14px;white-space:nowrap}
+a.opt{color:var(--tx);text-decoration:none}a.opt b{color:var(--tx)}

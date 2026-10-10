@@ -51,7 +51,7 @@ function subCard(url) {
   return '<div class="card subc"><div class="subh"><div><b>订阅链接</b><small>导入到客户端即可使用,请勿分享给他人</small></div><span class="subtag">通用订阅</span></div>' +
     '<button class="btn pri blk subgo" data-imp>一键导入</button>' +
     '<div class="subact"><button class="btn" data-copy>复制链接</button><button class="btn" data-qr>二维码</button>' +
-    (S.download_url ? '<a class="btn" href="' + esc(S.download_url) + '" target="_blank" rel="noopener">下载客户端</a>' : '') + '</div></div>';
+    '<button class="btn" data-dl>下载客户端</button></div></div>';
 }
 
 function statCard(ic, c, k, v, u) { return '<div class="card stat"><div class="sh"><span class="chip" style="--c:var(--c' + c + ')">' + ico(ic) + '</span><span class="k">' + k + '</span></div><div class="v">' + v + '</div>' + (u ? '<div class="u">' + u + '</div>' : '') + '</div>'; }
@@ -216,6 +216,29 @@ function importSheet(url) {
   $$('[data-i]', m).forEach(function (e) { e.onclick = function () { var c = list[Number(e.dataset.i)]; location.href = c[2](url); setTimeout(function () { if (!document.hidden) toast('没反应?请先安装 ' + c[0]); }, 1500); }; });
   $$('[data-cp]', m).forEach(function (e) { e.onclick = function () { copy(url); }; });
 }
+var DLS = {
+  ios: [['Shadowrocket', '付费 · App Store', 'https://apps.apple.com/app/shadowrocket/id932747118'],
+        ['Stash', '付费 · App Store', 'https://apps.apple.com/app/stash/id1596063349'],
+        ['sing-box VT', '免费 · App Store', 'https://apps.apple.com/app/sing-box-vt/id6673731168']],
+  android: [['sing-box', '免费 · GitHub', 'https://github.com/SagerNet/sing-box/releases'],
+            ['Clash Meta', '免费 · GitHub', 'https://github.com/MetaCubeX/ClashMetaForAndroid/releases'],
+            ['v2rayNG', '免费 · GitHub', 'https://github.com/2dust/v2rayNG/releases']],
+  desktop: [['Clash Verge Rev', 'Windows / Mac / Linux · GitHub', 'https://github.com/clash-verge-rev/clash-verge-rev/releases'],
+            ['v2rayN', 'Windows · GitHub', 'https://github.com/2dust/v2rayN/releases'],
+            ['sing-box', '命令行 · GitHub', 'https://github.com/SagerNet/sing-box/releases']]
+};
+function dlSheet() {
+  if (S.download_url) { window.open(S.download_url, '_blank', 'noopener'); return; }
+  var pf = platform(), names = { ios: 'iPhone / iPad', android: '安卓', desktop: '电脑' };
+  var m = sheet('<h3>下载客户端</h3><div class="seg-t" style="margin-bottom:14px">' + ['ios', 'android', 'desktop'].map(function (k) { return '<button data-pf="' + k + '"' + (k === pf ? ' class="on"' : '') + '>' + names[k] + '</button>'; }).join('') + '</div><div id="dll"></div><div class="mut sm" id="dln" style="margin-top:6px"></div>');
+  function show(k) {
+    $$('[data-pf]', m).forEach(function (b) { b.classList.toggle('on', b.dataset.pf === k); });
+    $('#dll', m).innerHTML = DLS[k].map(function (c) { return '<a class="opt" href="' + esc(c[2]) + '" target="_blank" rel="noopener"><span><b>' + esc(c[0]) + '</b><br><span class="mut sm">' + esc(c[1]) + '</span></span><span class="mut">下载 ›</span></a>'; }).join('');
+    $('#dln', m).textContent = k === 'ios' ? '这些 App 不在中国区 App Store 上架,需要使用其他地区的 Apple ID 下载。' : '安装后回到首页点「一键导入」即可。';
+  }
+  $$('[data-pf]', m).forEach(function (b) { b.onclick = function () { show(b.dataset.pf); }; });
+  show(pf);
+}
 function qrSheet(url) {
   var q = window.PrismQR(url), n = q.getModuleCount(), s = 220, cell = s / n, r = '';
   for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) if (q.isDark(y, x)) r += '<rect x="' + (x * cell).toFixed(2) + '" y="' + (y * cell).toFixed(2) + '" width="' + (cell + .4).toFixed(2) + '" height="' + (cell + .4).toFixed(2) + '"/>';
@@ -246,6 +269,7 @@ route(/^\/$/, function () {
         $('[data-copy]') && ($('[data-copy]').onclick = function () { copy(url); });
         $('[data-imp]') && ($('[data-imp]').onclick = function () { importSheet(url); });
         $('[data-qr]') && ($('[data-qr]').onclick = function () { qrSheet(url); });
+        $('[data-dl]') && ($('[data-dl]').onclick = dlSheet);
       }
     };
   });
