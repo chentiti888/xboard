@@ -92,6 +92,7 @@ var spin = '<div class="spin"></div>';
 var routes = [];
 function route(re, fn, pub) { routes.push({ re: re, fn: fn, pub: pub }); }
 var token = 0;
+try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
 function render() {
   var h = location.hash.replace(/^#/, '') || '/'; var q = h.split('?'); h = q[0]; var my = ++token;
   if (!auth && !/^\/(login|register|forgot)$/.test(h)) { location.hash = '#/login'; return; }
@@ -104,7 +105,7 @@ function render() {
       Promise.resolve(r.fn(m, new URLSearchParams(q[1] || ''))).then(function (res) {
         if (my !== token || res == null) return;
         $app.innerHTML = r.pub ? res.html : shell(h, res.html);
-        window.scrollTo(0, 0);
+        window.scrollTo(0, 0); setTimeout(function () { window.scrollTo(0, 0); }, 60);
         if (res.after) res.after();
       }).catch(function (e) { if (my === token) { $app.innerHTML = shell(h, '<div class="empty">加载失败:' + esc(e.message) + '<br><br><button class="btn" onclick="location.reload()">重试</button></div>'); } });
       return;
