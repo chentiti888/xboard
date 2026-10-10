@@ -221,3 +221,7 @@ html[data-skin=light] .dlb{background:#111827}
 .seg-t button{gap:8px}
 .dli-s{width:26px;height:26px;border-radius:8px}
 .dli-s svg,.seg-t button .dli-s svg{width:15px;height:15px}
+/* v2.3 列表图标改黑白小图标 */
+.dlo .dli{width:34px;height:34px;border-radius:10px;color:var(--tx);background:transparent;border:1px solid var(--bd)}
+.dlo .dli svg{width:18px;height:18px}
+html[data-skin] .dlo .dli{color:var(--tx);background:transparent;border-color:var(--bd)}
