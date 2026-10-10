@@ -16,6 +16,7 @@
       skin: @json($theme_config['skin'] ?? 'dark'),
       skin_switch: @json(($theme_config['skin_switch'] ?? '1') !== '0'),
       download_url: @json($theme_config['download_url'] ?? ''),
+      download_list: @json($theme_config['download_list'] ?? ''),
       background_url: @json($theme_config['background_url'] ?? '')
     };
     try { var s = localStorage.getItem('prism_skin'); if ((s === 'dark' || s === 'light') && window.settings.skin_switch) document.documentElement.dataset.skin = s; } catch (e) {}
