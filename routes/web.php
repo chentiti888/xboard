@@ -29,7 +29,7 @@ Route::get('/', function (Request $request) {
         }
     }
 
-    $theme = admin_setting('frontend_theme', 'Xboard');
+    $theme = admin_setting('frontend_theme', 'Prism');
     $themeService = new ThemeService();
 
     try {
