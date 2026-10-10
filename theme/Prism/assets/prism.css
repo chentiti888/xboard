@@ -217,3 +217,7 @@ html[data-skin=light] .dl-ios{color:#0284c7}html[data-skin=light] .dl-android{co
 .dlb{flex:none;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;color:#fff;background:var(--acb)}
 html[data-skin=light] .dlb{background:#111827}
 .seg-t button{white-space:nowrap}
+/* v2.2 顶部图标与列表统一 */
+.seg-t button{gap:8px}
+.dli-s{width:26px;height:26px;border-radius:8px}
+.dli-s svg,.seg-t button .dli-s svg{width:15px;height:15px}

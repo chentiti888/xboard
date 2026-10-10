@@ -247,7 +247,7 @@ function dlList() {
 function dlSheet() {
   if (S.download_url && !String(S.download_list || '').trim()) { window.open(fixUrl(S.download_url), '_blank', 'noopener'); return; }
   var L = dlList(), pf = platform(), names = { ios: 'iOS', android: '安卓', desktop: '电脑' };
-  var m = sheet('<h3>下载客户端</h3><div class="seg-t" style="margin-bottom:14px">' + ['ios', 'android', 'desktop'].map(function (k) { return '<button data-pf="' + k + '"' + (k === pf ? ' class="on"' : '') + '>' + ico({ ios: 'pios', android: 'pand', desktop: 'pc' }[k]) + names[k] + '</button>'; }).join('') + '</div><div id="dll"></div><div class="mut sm" id="dln" style="margin-top:6px"></div>');
+  var m = sheet('<h3>下载客户端</h3><div class="seg-t" style="margin-bottom:14px">' + ['ios', 'android', 'desktop'].map(function (k) { return '<button data-pf="' + k + '"' + (k === pf ? ' class="on"' : '') + '><span class="dli dli-s dl-' + k + '">' + ico({ ios: 'pios', android: 'pand', desktop: 'pc' }[k]) + '</span>' + names[k] + '</button>'; }).join('') + '</div><div id="dll"></div><div class="mut sm" id="dln" style="margin-top:6px"></div>');
   function show(k) {
     $$('[data-pf]', m).forEach(function (b) { b.classList.toggle('on', b.dataset.pf === k); });
     $('#dll', m).innerHTML = L[k].map(function (c) { return '<a class="opt dlo" href="' + esc(c[2]) + '" target="_blank" rel="noopener"><span class="dli dl-' + k + '">' + ico({ ios: 'pios', android: 'pand', desktop: 'pc' }[k]) + '</span><span class="dlt"><b>' + esc(c[0]) + '</b>' + (c[1] ? '<span class="mut sm">' + esc(c[1]) + '</span>' : '') + '</span><span class="dlb">下载</span></a>'; }).join('');
