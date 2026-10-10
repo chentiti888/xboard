@@ -10,9 +10,8 @@
       "field_name": "skin",
       "field_type": "select",
       "select_options": {
-        "dark": "深色科技",
-        "light": "简约白",
-        "glass": "毛玻璃"
+        "dark": "深色",
+        "light": "浅色"
       },
       "default_value": "dark"
     },

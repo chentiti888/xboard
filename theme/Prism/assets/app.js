@@ -25,6 +25,8 @@ var IC = {
   user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
   gift: '<path d="M3 9h18v4H3zM5 13v8h14v-8M12 9v12M12 9c-3 0-5-4-2-4s2 4 2 4zm0 0c3 0 5-4 2-4s-2 4-2 4z"/>',
   globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  moon: '<path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/>',
   book: '<path d="M4 4h10a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4zM4 16a4 4 0 0 1 4-4h10"/>'
 };
 function ico(n) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + IC[n] + '</svg>'; }
@@ -75,7 +77,7 @@ function shell(route, inner) {
   var tabs = NAV.map(function (n) { return '<a class="' + on(n[0]).trim() + '" href="' + n[0] + '">' + ico(n[2]) + n[1] + '</a>'; }).join('');
   return '<div class="shell"><aside class="side"><div class="brand">' + brand() + '</div>' + side + '<div class="sp"></div><a href="#" data-act="logout">退出登录</a></aside><main class="main pg">' + inner + '</main></div><nav class="tabbar">' + tabs + '</nav>';
 }
-function top(title, right) { return '<div class="top"><div class="brand">' + (title ? '<h2>' + esc(title) + '</h2>' : brand()) + '</div><div>' + (right || '') + '</div></div>'; }
+function top(title, right) { var cur = document.documentElement.dataset.skin; return '<div class="top"><div class="brand">' + (title ? '<h2>' + esc(title) + '</h2>' : brand()) + '</div><div class="r">' + (right || '') + (S.skin_switch ? '<button class="ibtn" data-tg title="切换深色/浅色">' + ico(cur === 'light' ? 'moon' : 'sun') + '</button>' : '') + '</div></div>'; }
 var spin = '<div class="spin"></div>';
 
 /* ---------- router ---------- */
@@ -107,6 +109,11 @@ document.addEventListener('click', function (e) {
   var a = e.target.closest('[data-act]'); if (!a) return;
   var act = a.dataset.act;
   if (act === 'logout') { e.preventDefault(); logout(); }
+});
+document.addEventListener('click', function (e) {
+  var t = e.target.closest('[data-tg]'); if (!t) return;
+  var n = document.documentElement.dataset.skin === 'light' ? 'dark' : 'light'; setSkin(n);
+  $$('[data-tg]').forEach(function (b) { b.innerHTML = ico(n === 'light' ? 'moon' : 'sun'); });
 });
 
 /* ---------- auth pages ---------- */
@@ -156,11 +163,12 @@ route(/^\/register$/, function () { return authPage('register'); }, 1);
 route(/^\/forgot$/, function () { return authPage('forgot'); }, 1);
 
 /* ---------- skin ---------- */
+function setSkin(s) { document.documentElement.dataset.skin = s; LS.set('prism_skin', s); var m = document.querySelector('meta[name=theme-color]'); if (m) m.content = s === 'light' ? '#f6f6f4' : '#070b14'; $$('[data-skin]').forEach(function (x) { x.classList.toggle('on', x.dataset.skin === s); }); }
 function skinBtns() {
   var cur = document.documentElement.dataset.skin;
-  return '<div class="skins">' + [['dark', '深色'], ['light', '简约'], ['glass', '毛玻璃']].map(function (s) { return '<button class="btn sm' + (cur === s[0] ? ' pri' : '') + '" data-skin="' + s[0] + '">' + s[1] + '</button>'; }).join('') + '</div>';
+  return '<div class="seg-t">' + [['dark', '深色'], ['light', '浅色']].map(function (s) { return '<button data-skin="' + s[0] + '"' + (cur === s[0] ? ' class="on"' : '') + '>' + s[1] + '</button>'; }).join('') + '</div>';
 }
-function bindSkin() { $$('[data-skin]').forEach(function (b) { b.onclick = function () { document.documentElement.dataset.skin = b.dataset.skin; LS.set('prism_skin', b.dataset.skin); $$('[data-skin]').forEach(function (x) { x.classList.toggle('pri', x === b); }); }; }); }
+function bindSkin() { $$('[data-skin]').forEach(function (b) { b.onclick = function () { setSkin(b.dataset.skin); }; }); }
 
 /* ---------- subscription helpers ---------- */
 var CLIENTS = [
@@ -189,7 +197,8 @@ route(/^\/$/, function () {
     var left = daysLeft(sub.expired_at), exp = !sub.expired_at ? '长期有效' : date(sub.expired_at);
     var lt = left == null ? '' : left < 0 ? '已过期' : '剩余 ' + left + ' 天';
     var n0 = (notes && notes.data ? notes.data : notes || [])[0];
-    var html = top('', '<a class="btn sm" href="#/me">' + esc((info.email || '').split('@')[0]) + '</a>') +
+    var hr = new Date().getHours(), hi = hr < 6 ? '夜深了' : hr < 12 ? '早上好' : hr < 18 ? '下午好' : '晚上好';
+    var html = top('', '') + '<div class="hello" style="margin:-4px 0 14px">' + hi + '<b>' + esc((info.email || '').split('@')[0]) + '</b></div>' +
       (n0 ? '<div class="card notice"><h3>' + esc(n0.title) + '</h3><div class="sm mut">' + md(n0.content) + '</div></div>' : '') +
       '<div class="card hero"><div class="k">' + (hasPlan ? esc(sub.plan ? sub.plan.name : '当前套餐') : '尚未订阅套餐') + ' · ' + esc(lt || exp) + '</div><div class="v">' + (hasPlan ? gb(Math.max(0, total - used)) + ' <small style="font-size:15px;font-weight:600">GB 剩余</small>' : '—') + '</div><div class="bar"><i style="width:' + pct.toFixed(1) + '%"></i></div><div class="row sm" style="margin-top:8px;opacity:.85"><span>已用 ' + bytes(used) + '</span><span>总量 ' + bytes(total) + '</span></div></div>' +
       '<div class="grid2"><div class="card stat"><div class="k">到期时间</div><div class="v">' + esc(exp) + '</div><div class="u">' + esc(lt) + '</div></div>' +
@@ -268,7 +277,7 @@ route(/^\/orders$/, function () {
     return {
       html: top('我的订单') + '<div class="card">' + (list.length ? list.map(function (o) {
         var st = OST[o.status] || ['未知', ''];
-        return '<a class="li" href="#/order/' + esc(o.trade_no) + '" style="color:inherit"><div class="a"><b>' + esc(o.plan ? o.plan.name : '订单') + ' · ' + esc(pname(o.period)) + '</b><span class="mut sm mono">' + esc(o.trade_no) + ' · ' + date(o.created_at, 1) + '</span></div><div style="text-align:right"><b>' + money(o.total_amount) + '</b><br><span class="tag ' + st[1] + '">' + st[0] + '</span></div></a>';
+        return '<a class="ord" href="#/order/' + esc(o.trade_no) + '"><div class="a"><b>' + esc(o.plan ? o.plan.name : '订单') + ' · ' + esc(pname(o.period)) + '</b><div class="d">' + date(o.created_at, 1) + '</div><div class="n">' + esc(o.trade_no) + '</div></div><div class="z"><b>' + money(o.total_amount) + '</b><span class="tag ' + st[1] + '">' + st[0] + '</span></div></a>';
       }).join('') : '<div class="empty">暂无订单</div>') + '</div>'
     };
   });
@@ -315,7 +324,7 @@ route(/^\/tickets$/, function () {
     var lv = ['低', '中', '高'];
     return {
       html: top('我的工单', '<button class="btn pri sm" id="nt">新建工单</button>') + '<div class="card">' + (list.length ? list.map(function (t) {
-        return '<a class="li" href="#/ticket/' + t.id + '" style="color:inherit"><div class="a"><b>' + esc(t.subject) + '</b><span class="mut sm">优先级 ' + lv[t.level] + ' · ' + date(t.updated_at, 1) + '</span></div><span class="tag ' + (t.status === 1 ? '' : t.reply_status === 0 ? 'ok' : 'warn') + '">' + (t.status === 1 ? '已关闭' : t.reply_status === 0 ? '已回复' : '待回复') + '</span></a>';
+        return '<a class="li" href="#/ticket/' + t.id + '" style="color:inherit"><div class="a"><b>' + esc(t.subject) + '</b><span class="mut sm">优先级 ' + lv[t.level] + ' · ' + date(t.updated_at, 1) + '</span></div><span class="tag ' + (t.status === 1 ? '' : t.reply_status === 1 ? 'ok' : 'warn') + '">' + (t.status === 1 ? '已关闭' : t.reply_status === 1 ? '已回复' : '待回复') + '</span></a>';
       }).join('') : '<div class="empty">暂无工单</div>') + '</div>',
       after: function () {
         $('#nt').onclick = function () {
@@ -387,7 +396,7 @@ route(/^\/me$/, function () {
   return Promise.all([getInfo(true), getSub()]).then(function (a) {
     var i = a[0];
     return {
-      html: top('我的') + '<div class="card"><div class="row"><div><b>' + esc(i.email) + '</b><div class="mut sm">注册于 ' + date(i.created_at) + '</div></div><span class="tag">UID ' + esc(i.id || '') + '</span></div></div>' +
+      html: top('我的') + '<div class="card"><div class="row"><div><b>' + esc(i.email) + '</b><div class="mut sm">注册于 ' + date(i.created_at) + '</div></div>' + (i.id ? '<span class="tag">UID ' + esc(i.id) + '</span>' : '') + '</div></div>' +
         '<div class="grid2"><div class="card stat"><div class="k">账户余额</div><div class="v">' + money(i.balance) + '</div></div><div class="card stat"><div class="k">佣金余额</div><div class="v">' + money(i.commission_balance) + '</div></div></div>' +
         '<div class="card"><h3>外观</h3>' + (S.skin_switch ? skinBtns() : '<span class="mut sm">管理员已固定皮肤</span>') + '</div>' +
         '<div class="card"><a class="li" href="#/invite" style="color:inherit"><b>邀请返利</b><span class="mut">›</span></a><a class="li" href="#/nodes" style="color:inherit"><b>节点状态</b><span class="mut">›</span></a><a class="li" href="#/docs" style="color:inherit"><b>使用文档</b><span class="mut">›</span></a></div>' +
@@ -406,6 +415,7 @@ route(/^\/me$/, function () {
 });
 
 /* ---------- boot ---------- */
+if (document.documentElement.dataset.skin !== 'light') document.documentElement.dataset.skin = 'dark';
 if (S.background_url) { document.body.style.background = 'url(' + S.background_url + ') center/cover fixed'; }
 if (!location.hash) location.hash = auth ? '#/' : '#/login';
 render();
