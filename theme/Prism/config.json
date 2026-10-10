@@ -1,0 +1,49 @@
+{
+  "name": "Prism",
+  "description": "Prism —— 三种皮肤(深色科技 / 简约白 / 毛玻璃)的用户端主题,纯静态无需构建",
+  "version": "1.0.0",
+  "images": "",
+  "configs": [
+    {
+      "label": "皮肤",
+      "placeholder": "请选择皮肤",
+      "field_name": "skin",
+      "field_type": "select",
+      "select_options": {
+        "dark": "深色科技",
+        "light": "简约白",
+        "glass": "毛玻璃"
+      },
+      "default_value": "dark"
+    },
+    {
+      "label": "允许用户自行切换皮肤",
+      "placeholder": "是否在界面显示皮肤切换按钮",
+      "field_name": "skin_switch",
+      "field_type": "select",
+      "select_options": {
+        "1": "允许",
+        "0": "不允许"
+      },
+      "default_value": "1"
+    },
+    {
+      "label": "客户端下载链接",
+      "placeholder": "显示在首页的『下载客户端』按钮,留空则隐藏",
+      "field_name": "download_url",
+      "field_type": "input"
+    },
+    {
+      "label": "背景图片URL",
+      "placeholder": "留空使用皮肤默认背景",
+      "field_name": "background_url",
+      "field_type": "input"
+    },
+    {
+      "label": "自定义页脚HTML",
+      "placeholder": "可以加入在线客服等JS代码",
+      "field_name": "custom_html",
+      "field_type": "textarea"
+    }
+  ]
+}
