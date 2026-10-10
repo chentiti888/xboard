@@ -360,3 +360,11 @@ html[data-skin=dark] .tabbar{background:rgba(44,44,46,.72);-webkit-backdrop-filt
 html[data-skin=dark] .tabbar a{color:#ebebf5}
 html[data-skin=dark] .tabbar a.on{color:#0a84ff;background:rgba(118,118,128,.28)}
 .main{padding-bottom:calc(62px + 48px + env(safe-area-inset-bottom))}
+/* v3.3 导航栏下方遮罩: 内容不再叠到导航栏后面 */
+.tabbar-mask{display:none}
+@media (max-width:899px){
+  .tabbar-mask{display:block;position:fixed;left:0;right:0;bottom:0;height:calc(62px + 10px + 16px + env(safe-area-inset-bottom));z-index:19;pointer-events:none;
+    background:linear-gradient(to bottom,transparent 0,var(--bg) 14px,var(--bg) 100%)}
+}
+html[data-skin=light] .tabbar-mask{--bg:#f2f2f7}
+html[data-skin=dark] .tabbar-mask{--bg:#000}
