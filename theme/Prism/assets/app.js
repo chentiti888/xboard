@@ -171,17 +171,24 @@ function skinBtns() {
 function bindSkin() { $$('[data-skin]').forEach(function (b) { b.onclick = function () { setSkin(b.dataset.skin); }; }); }
 
 /* ---------- subscription helpers ---------- */
+var T = function () { return encodeURIComponent(S.title || 'Prism'); };
 var CLIENTS = [
-  ['Clash / Clash Meta', function (u) { return 'clash://install-config?url=' + encodeURIComponent(u) + '&name=' + encodeURIComponent(S.title || 'Prism'); }],
-  ['Stash', function (u) { return 'stash://install-config?url=' + encodeURIComponent(u); }],
-  ['Shadowrocket', function (u) { return 'shadowrocket://add/sub://' + btoa(u) + '?remark=' + encodeURIComponent(S.title || 'Prism'); }],
-  ['sing-box', function (u) { return 'sing-box://import-remote-profile?url=' + encodeURIComponent(u) + '#' + encodeURIComponent(S.title || 'Prism'); }],
-  ['Surge', function (u) { return 'surge:///install-config?url=' + encodeURIComponent(u); }],
-  ['Quantumult X / v2rayN', null]
+  ['Shadowrocket', 'ios', function (u) { return 'shadowrocket://add/sub://' + btoa(u) + '?remark=' + T(); }],
+  ['Stash', 'ios', function (u) { return 'stash://install-config?url=' + encodeURIComponent(u); }],
+  ['Surge', 'ios', function (u) { return 'surge:///install-config?url=' + encodeURIComponent(u); }],
+  ['sing-box', 'ios,android', function (u) { return 'sing-box://import-remote-profile?url=' + encodeURIComponent(u) + '#' + T(); }],
+  ['Quantumult X', 'ios', null],
+  ['Clash Meta', 'android', function (u) { return 'clash://install-config?url=' + encodeURIComponent(u) + '&name=' + T(); }],
+  ['v2rayNG', 'android', function (u) { return 'v2rayng://install-sub/?url=' + encodeURIComponent(u) + '#' + T(); }],
+  ['Clash Verge / Mihomo', 'desktop', function (u) { return 'clash://install-config?url=' + encodeURIComponent(u) + '&name=' + T(); }],
+  ['其他客户端(v2rayN 等)', 'desktop,android,ios', null]
 ];
+function platform() { var ua = navigator.userAgent || ''; if (/iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)) return 'ios'; if (/Android/i.test(ua)) return 'android'; return 'desktop'; }
 function importSheet(url) {
-  var m = sheet('<h3>一键导入订阅</h3>' + CLIENTS.map(function (c, i) { return c[1] ? '<a class="opt" href="' + esc(c[1](url)) + '"><span>' + esc(c[0]) + '</span><span class="mut">导入 ›</span></a>' : '<div class="opt" data-cp="1"><span>' + esc(c[0]) + '</span><span class="mut">复制链接手动添加</span></div>'; }).join('') + (S.download_url ? '<a class="btn blk" style="margin-top:6px" href="' + esc(S.download_url) + '" target="_blank" rel="noopener">还没有客户端?去下载</a>' : ''));
-  $('[data-cp]', m).onclick = function () { copy(url); };
+  var pf = platform(), list = CLIENTS.filter(function (c) { return c[1].split(',').indexOf(pf) > -1; });
+  var m = sheet('<h3>一键导入订阅</h3><div class="mut sm" style="margin:-8px 0 12px">已根据你的设备显示可用客户端</div>' + list.map(function (c, i) { return c[2] ? '<div class="opt" data-i="' + i + '"><span>' + esc(c[0]) + '</span><span class="mut">导入 ›</span></div>' : '<div class="opt" data-cp="1"><span>' + esc(c[0]) + '</span><span class="mut">复制链接手动添加</span></div>'; }).join('') + (S.download_url ? '<a class="btn blk" style="margin-top:6px" href="' + esc(S.download_url) + '" target="_blank" rel="noopener">还没有客户端?去下载</a>' : ''));
+  $$('[data-i]', m).forEach(function (e) { e.onclick = function () { var c = list[Number(e.dataset.i)]; location.href = c[2](url); setTimeout(function () { if (!document.hidden) toast('没反应?请先安装 ' + c[0]); }, 1500); }; });
+  $$('[data-cp]', m).forEach(function (e) { e.onclick = function () { copy(url); }; });
 }
 function qrSheet(url) {
   var q = window.PrismQR(url), n = q.getModuleCount(), s = 220, cell = s / n, r = '';
