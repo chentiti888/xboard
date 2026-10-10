@@ -27,9 +27,17 @@ var IC = {
   globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
   moon: '<path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/>',
+  cal: '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  wallet: '<path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2z"/><circle cx="16.5" cy="14.5" r="1"/>',
+  device: '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>',
+  reload: '<path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/>',
+  users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14a6.5 6.5 0 0 1 3.5 6"/>',
+  pct: '<path d="M19 5L5 19M7 8a1.5 1.5 0 1 0 0-.01M17 17a1.5 1.5 0 1 0 0-.01"/>',
   book: '<path d="M4 4h10a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4zM4 16a4 4 0 0 1 4-4h10"/>'
 };
 function ico(n) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + IC[n] + '</svg>'; }
+
+function statCard(ic, c, k, v, u) { return '<div class="card stat"><div class="sh"><span class="chip" style="--c:var(--c' + c + ')">' + ico(ic) + '</span><span class="k">' + k + '</span></div><div class="v">' + v + '</div>' + (u ? '<div class="u">' + u + '</div>' : '') + '</div>'; }
 
 /* ---------- api ---------- */
 var auth = LS.get('prism_auth');
@@ -130,7 +138,7 @@ function authPage(kind) {
       (reg ? '<div class="fld"><label>邀请码' + (Number(c.is_invite_force) ? '' : '(选填)') + '</label><input name="invite_code" value="' + esc(new URLSearchParams(location.hash.split('?')[1] || '').get('code') || '') + '" ' + (Number(c.is_invite_force) ? 'required' : '') + '></div>' : '') +
       '<button class="btn pri blk" type="submit">' + (lg ? '登录' : reg ? '注册' : '重置密码') + '</button></form>' +
       '<div class="lnk">' + (lg ? '<a href="#/forgot">忘记密码?</a><a href="#/register">注册账号</a>' : '<a href="#/login">← 返回登录</a>' + (fg ? '' : '<span></span>')) + '</div></div>' +
-      (S.skin_switch ? '<div style="margin-top:16px;text-align:center">' + skinBtns() + '</div>' : '') + '</div></div>';
+      '</div>' + (S.skin_switch ? '<button class="ibtn auth-tg" data-tg title="切换深色/浅色">' + ico(document.documentElement.dataset.skin === 'light' ? 'moon' : 'sun') + '</button>' : '') + '</div>';
     return {
       html: html, after: function () {
         bindSkin();
@@ -208,10 +216,10 @@ route(/^\/$/, function () {
     var html = top('', '') + '<div class="hello" style="margin:-4px 0 14px">' + hi + '<b>' + esc((info.email || '').split('@')[0]) + '</b></div>' +
       (n0 ? '<div class="card notice"><h3>' + esc(n0.title) + '</h3><div class="sm mut">' + md(n0.content) + '</div></div>' : '') +
       '<div class="card hero"><div class="k">' + (hasPlan ? esc(sub.plan ? sub.plan.name : '当前套餐') : '尚未订阅套餐') + ' · ' + esc(lt || exp) + '</div><div class="v">' + (hasPlan ? gb(Math.max(0, total - used)) + ' <small style="font-size:15px;font-weight:600">GB 剩余</small>' : '—') + '</div><div class="bar"><i style="width:' + pct.toFixed(1) + '%"></i></div><div class="row sm" style="margin-top:8px;opacity:.85"><span>已用 ' + bytes(used) + '</span><span>总量 ' + bytes(total) + '</span></div></div>' +
-      '<div class="grid2"><div class="card stat"><div class="k">到期时间</div><div class="v">' + esc(exp) + '</div><div class="u">' + esc(lt) + '</div></div>' +
-      '<div class="card stat"><div class="k">账户余额</div><div class="v">' + money(info.balance) + '</div><div class="u">佣金 ' + money(info.commission_balance) + '</div></div>' +
-      '<div class="card stat"><div class="k">设备限制</div><div class="v">' + (sub.device_limit || info.device_limit || '不限') + '</div><div class="u">同时在线</div></div>' +
-      '<div class="card stat"><div class="k">下次重置</div><div class="v">' + (sub.reset_day != null ? sub.reset_day + ' 天后' : '—') + '</div><div class="u">流量周期</div></div></div>' +
+      '<div class="grid2">' + statCard('cal', 1, '到期时间', esc(exp), esc(lt)) +
+      statCard('wallet', 2, '账户余额', money(info.balance), '佣金 ' + money(info.commission_balance)) +
+      statCard('device', 3, '设备限制', (sub.device_limit || info.device_limit || '不限'), '同时在线') +
+      statCard('reload', 4, '下次重置', (sub.reset_day != null ? sub.reset_day + ' 天后' : '—'), '流量周期') + '</div>' +
       (hasPlan ? '<div class="card"><h3>订阅链接</h3><div class="urlbox mono">' + esc(sub.subscribe_url) + '</div><div class="btns" style="margin-top:12px"><button class="btn" data-copy>复制链接</button><button class="btn pri" data-imp>一键导入</button><button class="btn" data-qr>二维码</button></div>' + (S.download_url ? '<a class="btn blk sm" style="margin-top:10px" href="' + esc(S.download_url) + '" target="_blank" rel="noopener">下载客户端</a>' : '') + '</div>'
         : '<div class="card"><h3>开始使用</h3><p class="mut">你还没有可用的套餐,选购后即可获得订阅链接。</p><a class="btn pri blk" href="#/plans">选购套餐</a></div>') +
       ((stat && (stat[0] || stat[1])) ? '<div class="card"><a class="row" href="#/orders"><span>待支付订单 <b>' + (stat[0] || 0) + '</b> · 未处理工单 <b>' + (stat[1] || 0) + '</b></span><span class="mut">›</span></a></div>' : '');
@@ -363,7 +371,7 @@ route(/^\/invite$/, function () {
     var st = d.stat || [0, 0, 0, 0, 0], codes = d.codes || [];
     var link = function (c) { return location.origin + '/#/register?code=' + c; };
     return {
-      html: top('邀请返利') + '<div class="grid2"><div class="card stat"><div class="k">已邀请</div><div class="v">' + st[0] + '</div><div class="u">位用户</div></div><div class="card stat"><div class="k">返利比例</div><div class="v">' + st[3] + '%</div><div class="u">每笔订单</div></div><div class="card stat"><div class="k">可用佣金</div><div class="v">' + money(st[4]) + '</div><div class="u">累计 ' + money(st[1]) + '</div></div><div class="card stat"><div class="k">确认中</div><div class="v">' + money(st[2]) + '</div><div class="u">审核后可用</div></div></div>' +
+      html: top('邀请返利') + '<div class="grid2">' + statCard('users', 1, '已邀请', st[0], '位用户') + statCard('pct', 3, '返利比例', st[3] + '%', '每笔订单') + statCard('wallet', 2, '可用佣金', money(st[4]), '累计 ' + money(st[1])) + statCard('reload', 4, '确认中', money(st[2]), '审核后可用') + '</div>' +
         '<div class="card"><h3>我的邀请码<button class="btn sm" id="gen">生成</button></h3>' + (codes.length ? codes.map(function (c) { return '<div class="li" data-l="' + esc(link(c.code)) + '"><div class="a"><b class="mono">' + esc(c.code) + '</b><span class="mut sm">点击复制邀请链接</span></div><span class="mut">⧉</span></div>'; }).join('') : '<div class="empty">还没有邀请码,点击右上角生成</div>') + '</div>',
       after: function () {
         $$('[data-l]').forEach(function (e) { e.onclick = function () { copy(e.dataset.l); }; });
@@ -378,7 +386,7 @@ route(/^\/nodes$/, function () {
   return api('GET', 'user/server/fetch').then(function (list) {
     list = list || [];
     return {
-      html: top('节点状态') + '<div class="card">' + (list.length ? list.map(function (s) { return '<div class="li" style="cursor:default"><div class="a"><b>' + esc(s.name) + '</b><span class="mut sm">' + esc(s.type || '') + ' · 倍率 ' + esc(s.rate) + 'x' + (s.tags && s.tags.length ? ' · ' + esc(s.tags.join(' ')) : '') + '</span></div><span class="tag ' + (s.is_online ? 'ok' : 'bad') + '">' + (s.is_online ? '在线' : '离线') + '</span></div>'; }).join('') : '<div class="empty">当前套餐暂无可用节点<br>请先订购或续费套餐</div>') + '</div>'
+      html: top('节点状态') + (list.length ? '<div class="nodes">' + list.map(function (s) { var on = !!s.is_online; return '<div class="node"><span class="led' + (on ? '' : ' off') + '"></span><div class="a"><b>' + esc(s.name) + '</b><div class="sub"><span class="pt">' + esc(s.type || '') + '</span><span class="pt">倍率 ' + esc(s.rate) + 'x</span>' + (s.tags && s.tags.length ? s.tags.map(function (t) { return '<span class="pt">' + esc(t) + '</span>'; }).join('') : '') + '</div></div><span class="tag ' + (on ? 'ok' : 'bad') + '">' + (on ? '在线' : '离线') + '</span></div>'; }).join('') + '</div>' : '<div class="card"><div class="empty">当前套餐暂无可用节点<br>请先订购或续费套餐</div></div>')
     };
   });
 });
@@ -404,8 +412,7 @@ route(/^\/me$/, function () {
     var i = a[0];
     return {
       html: top('我的') + '<div class="card"><div class="row"><div><b>' + esc(i.email) + '</b><div class="mut sm">注册于 ' + date(i.created_at) + '</div></div>' + (i.id ? '<span class="tag">UID ' + esc(i.id) + '</span>' : '') + '</div></div>' +
-        '<div class="grid2"><div class="card stat"><div class="k">账户余额</div><div class="v">' + money(i.balance) + '</div></div><div class="card stat"><div class="k">佣金余额</div><div class="v">' + money(i.commission_balance) + '</div></div></div>' +
-        '<div class="card"><h3>外观</h3>' + (S.skin_switch ? skinBtns() : '<span class="mut sm">管理员已固定皮肤</span>') + '</div>' +
+        '<div class="grid2">' + statCard('wallet', 2, '账户余额', money(i.balance), '') + statCard('users', 1, '佣金余额', money(i.commission_balance), '') + '</div>' +
         '<div class="card"><a class="li" href="#/invite" style="color:inherit"><b>邀请返利</b><span class="mut">›</span></a><a class="li" href="#/nodes" style="color:inherit"><b>节点状态</b><span class="mut">›</span></a><a class="li" href="#/docs" style="color:inherit"><b>使用文档</b><span class="mut">›</span></a></div>' +
         '<div class="card"><h3>账号安全</h3><div class="li" id="pw"><b>修改密码</b><span class="mut">›</span></div><div class="li" id="rs"><div class="a"><b>重置订阅链接</b><span class="mut sm">旧链接将立即失效</span></div><span class="mut">›</span></div></div>' +
         '<button class="btn bad blk" data-act="logout">退出登录</button>',
