@@ -38,6 +38,9 @@ var IC = {
   qr: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v.01M14 21h3M21 17v4"/>',
   dl: '<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',
   bolt: '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+  pios: '<rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 5h3"/>',
+  pand: '<rect x="6.5" y="2.5" width="11" height="19" rx="2"/><path d="M10 18.5h4M6.5 16h11"/>',
+  pc: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
   book: '<path d="M4 4h10a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4zM4 16a4 4 0 0 1 4-4h10"/>'
 };
 function ico(n) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + IC[n] + '</svg>'; }
@@ -243,11 +246,11 @@ function dlList() {
 }
 function dlSheet() {
   if (S.download_url && !String(S.download_list || '').trim()) { window.open(fixUrl(S.download_url), '_blank', 'noopener'); return; }
-  var L = dlList(), pf = platform(), names = { ios: 'iPhone / iPad', android: '安卓', desktop: '电脑' };
-  var m = sheet('<h3>下载客户端</h3><div class="seg-t" style="margin-bottom:14px">' + ['ios', 'android', 'desktop'].map(function (k) { return '<button data-pf="' + k + '"' + (k === pf ? ' class="on"' : '') + '>' + names[k] + '</button>'; }).join('') + '</div><div id="dll"></div><div class="mut sm" id="dln" style="margin-top:6px"></div>');
+  var L = dlList(), pf = platform(), names = { ios: 'iOS', android: '安卓', desktop: '电脑' };
+  var m = sheet('<h3>下载客户端</h3><div class="seg-t" style="margin-bottom:14px">' + ['ios', 'android', 'desktop'].map(function (k) { return '<button data-pf="' + k + '"' + (k === pf ? ' class="on"' : '') + '>' + ico({ ios: 'pios', android: 'pand', desktop: 'pc' }[k]) + names[k] + '</button>'; }).join('') + '</div><div id="dll"></div><div class="mut sm" id="dln" style="margin-top:6px"></div>');
   function show(k) {
     $$('[data-pf]', m).forEach(function (b) { b.classList.toggle('on', b.dataset.pf === k); });
-    $('#dll', m).innerHTML = L[k].map(function (c) { return '<a class="opt" href="' + esc(c[2]) + '" target="_blank" rel="noopener"><span><b>' + esc(c[0]) + '</b>' + (c[1] ? '<br><span class="mut sm">' + esc(c[1]) + '</span>' : '') + '</span><span class="mut">下载 ›</span></a>'; }).join('');
+    $('#dll', m).innerHTML = L[k].map(function (c) { return '<a class="opt dlo" href="' + esc(c[2]) + '" target="_blank" rel="noopener"><span class="dli dl-' + k + '">' + ico({ ios: 'pios', android: 'pand', desktop: 'pc' }[k]) + '</span><span class="dlt"><b>' + esc(c[0]) + '</b>' + (c[1] ? '<span class="mut sm">' + esc(c[1]) + '</span>' : '') + '</span><span class="dlb">下载</span></a>'; }).join('');
     $('#dln', m).textContent = (k === 'ios' && L.ios === DLS.ios) ? '这些 App 不在中国区 App Store 上架,需要使用其他地区的 Apple ID 下载。' : '安装后回到首页点「一键导入」即可。';
   }
   $$('[data-pf]', m).forEach(function (b) { b.onclick = function () { show(b.dataset.pf); }; });

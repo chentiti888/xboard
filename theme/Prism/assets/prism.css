@@ -202,3 +202,18 @@ a.opt{color:var(--tx);text-decoration:none}a.opt b{color:var(--tx)}
 .sheet h3{padding-right:44px}
 .sx{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:var(--card2);color:var(--mut);font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;z-index:2}
 .sx:active{transform:scale(.94)}
+/* v2.1 下载列表图标 */
+.seg-t button{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.seg-t button svg{width:16px;height:16px}
+.dlo{justify-content:flex-start;gap:12px;padding:12px 14px}
+.dli{flex:none;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.dli svg{width:22px;height:22px}
+.dl-ios{color:#38bdf8;background:rgba(56,189,248,.14);border:1px solid rgba(56,189,248,.3)}
+.dl-android{color:#34d399;background:rgba(52,211,153,.14);border:1px solid rgba(52,211,153,.3)}
+.dl-desktop{color:#a78bfa;background:rgba(167,139,250,.14);border:1px solid rgba(167,139,250,.3)}
+html[data-skin=light] .dl-ios{color:#0284c7}html[data-skin=light] .dl-android{color:#059669}html[data-skin=light] .dl-desktop{color:#7c3aed}
+.dlt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.dlt b{font-size:15px}
+.dlb{flex:none;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;color:#fff;background:var(--acb)}
+html[data-skin=light] .dlb{background:#111827}
+.seg-t button{white-space:nowrap}
