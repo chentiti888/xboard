@@ -226,3 +226,69 @@ html[data-skin=light] .dlb{background:#111827}
 .dlo .dli svg{width:18px;height:18px}
 html[data-skin] .dlo .dli{color:var(--tx);background:transparent;border-color:var(--bd)}
 .dlo{padding:14px 16px}
+
+/* ================= v3.0 浅色 = iOS 风格 (系统配色) ================= */
+html[data-skin=light]{
+  --bg:#f2f2f7;--bg2:#e5e5ea;--card:#ffffff;--card2:#f2f2f7;--bd:rgba(60,60,67,.12);
+  --tx:#000000;--mut:rgba(60,60,67,.6);
+  --ac:#007aff;--ac2:#007aff;--acb:#007aff;--acf:#fff;
+  --ok:#34c759;--bad:#ff3b30;--warn:#ff9500;
+  --c1:#007aff;--c2:#34c759;--c3:#5856d6;--c4:#ff9500;
+  --sh:none;--hi:none;--blur:0px;--r:16px;--rs:12px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Helvetica Neue",sans-serif
+}
+html[data-skin=light] body{background:#f2f2f7}
+html[data-skin=light] .card{background:#fff;border:0;box-shadow:none}
+html[data-skin=light] .card h3{font-weight:600}
+/* 顶部大标题 */
+html[data-skin=light] .top h2{font-size:30px;font-weight:700;letter-spacing:-.02em}
+html[data-skin=light] .logo-dot{background:linear-gradient(135deg,#0a84ff,#5e5ce6)}
+/* 流量卡片: iOS 蓝 */
+html[data-skin=light] .hero{background:linear-gradient(135deg,#0a84ff 0%,#007aff 45%,#5856d6 100%);box-shadow:0 10px 24px rgba(0,122,255,.25)}
+html[data-skin=light] .hero .bar{background:rgba(255,255,255,.28)}
+html[data-skin=light] .hero .bar>i{background:#fff}
+/* 统计卡片图标: 设置 App 风格的实色圆角方块 */
+html[data-skin=light] .chip{color:#fff;background:var(--c);box-shadow:none;border-radius:8px}
+html[data-skin=light] .stat .k{color:var(--mut)}
+/* 按钮 */
+html[data-skin=light] .btn{background:rgba(118,118,128,.12);border:0;color:#007aff;box-shadow:none;font-weight:600}
+html[data-skin=light] .btn.pri,html[data-skin=light] .btn.pri:hover{background:#007aff;color:#fff;box-shadow:none}
+html[data-skin=light] .btn.bad{color:#ff3b30}
+html[data-skin=light] .subgo{box-shadow:0 6px 16px rgba(0,122,255,.28)!important}
+html[data-skin=light] .subtag{color:#007aff;background:rgba(0,122,255,.1);border:0}
+/* 输入框 */
+html[data-skin=light] input,html[data-skin=light] select,html[data-skin=light] textarea{background:#fff;border:1px solid rgba(60,60,67,.18)}
+html[data-skin=light] input:focus,html[data-skin=light] textarea:focus{border-color:#007aff}
+/* 列表 / 选项 */
+html[data-skin=light] .li{border-bottom:.5px solid rgba(60,60,67,.29)}
+html[data-skin=light] .opt{background:#fff;border:0;box-shadow:none}
+html[data-skin=light] .sheet .opt{background:#fff}
+html[data-skin=light] .opt.on{box-shadow:0 0 0 2px #007aff inset}
+html[data-skin=light] .plan.hot{border-color:#007aff;box-shadow:0 0 0 2px #007aff}
+html[data-skin=light] .plan .badge{background:#007aff}
+/* 分段控件 (Segmented Control) */
+html[data-skin=light] .seg-t{background:rgba(118,118,128,.12);border-radius:9px;padding:2px}
+html[data-skin=light] .seg-t button{color:#000;font-weight:500;border-radius:7px}
+html[data-skin=light] .seg-t button.on{background:#fff;color:#000;font-weight:600;box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04)}
+html[data-skin=light] .seg button{background:rgba(118,118,128,.12);border:0;color:#000}
+html[data-skin=light] .seg button.on{background:#007aff;color:#fff}
+/* 标签 */
+html[data-skin=light] .tag{border:0;background:rgba(118,118,128,.12);color:rgba(60,60,67,.6)}
+html[data-skin=light] .tag.ok,html[data-skin=light] .tag.bad,html[data-skin=light] .tag.warn{border:0;background:color-mix(in srgb,currentColor 12%,transparent)}
+html[data-skin=light] .tag:before{box-shadow:none!important}
+/* 节点卡片 */
+html[data-skin=light] .node{background:#fff;border:0;box-shadow:none}
+/* 底部标签栏: 毛玻璃 + iOS 蓝 */
+html[data-skin=light] .tabbar{background:rgba(249,249,249,.94);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid rgba(60,60,67,.29);box-shadow:none}
+html[data-skin=light] .tabbar a{color:#999}
+html[data-skin=light] .tabbar a.on{color:#007aff;font-weight:600}
+html[data-skin=light] .tabbar a.on:before{display:none}
+/* 弹出面板 */
+html[data-skin=light] .sheet{background:#f2f2f7;border:0}
+html[data-skin=light] .sx{background:rgba(118,118,128,.12);border:0;color:rgba(60,60,67,.6)}
+html[data-skin=light] .dlb{background:rgba(0,122,255,.12);color:#007aff}
+html[data-skin=light] .ibtn{background:#fff;border:0;box-shadow:none;color:#007aff}
+/* 链接色 */
+html[data-skin=light] a.row,html[data-skin=light] .row b{color:inherit}
+html[data-skin=light] .li:last-child{border-bottom:0}
+html[data-skin=light] .btn.bad{background:#fff;color:#ff3b30}
