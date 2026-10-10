@@ -103,7 +103,7 @@ function shell(route, inner) {
   var on = function (h) { return (h === cur || (h === '#/' && cur === '#/')) ? ' on' : ''; };
   var side = SIDE.map(function (n) { return '<a class="' + on(n[0]).trim() + '" href="' + n[0] + '">' + ico(n[2]) + n[1] + '</a>'; }).join('');
   var tabs = NAV.map(function (n) { return '<a class="' + on(n[0]).trim() + '" href="' + n[0] + '">' + ico(n[2]) + n[1] + '</a>'; }).join('');
-  return '<div class="shell"><aside class="side"><div class="brand">' + brand() + '</div>' + side + '<div class="sp"></div><a href="#" data-act="logout">退出登录</a></aside><main class="main pg">' + inner + '</main></div><div class="tabbar-mask"></div><nav class="tabbar">' + tabs + '</nav>';
+  return '<div class="shell"><aside class="side"><div class="brand">' + brand() + '</div>' + side + '<div class="sp"></div><a href="#" data-act="logout">退出登录</a></aside><main class="main pg">' + inner + '</main></div><nav class="tabbar">' + tabs + '</nav>';
 }
 function top(title, right) { var cur = document.documentElement.dataset.skin; return '<div class="top"><div class="brand">' + (title ? '<h2>' + esc(title) + '</h2>' : brand()) + '</div><div class="r">' + (right || '') + (S.skin_switch ? '<button class="ibtn" data-tg title="切换深色/浅色">' + ico(cur === 'light' ? 'moon' : 'sun') + '</button>' : '') + '</div></div>'; }
 var spin = '<div class="spin"></div>';
