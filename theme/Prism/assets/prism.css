@@ -292,3 +292,58 @@ html[data-skin=light] .ibtn{background:#fff;border:0;box-shadow:none;color:#007a
 html[data-skin=light] a.row,html[data-skin=light] .row b{color:inherit}
 html[data-skin=light] .li:last-child{border-bottom:0}
 html[data-skin=light] .btn.bad{background:#fff;color:#ff3b30}
+/* ================= v3.1 深色 = iOS 深色风格 (系统配色) ================= */
+html[data-skin=dark]{
+  --bg:#000000;--bg2:#1c1c1e;--card:#1c1c1e;--card2:#2c2c2e;--bd:rgba(84,84,88,.36);
+  --tx:#ffffff;--mut:rgba(235,235,245,.6);
+  --ac:#0a84ff;--ac2:#0a84ff;--acb:#0a84ff;--acf:#fff;
+  --ok:#30d158;--bad:#ff453a;--warn:#ff9f0a;
+  --c1:#0a84ff;--c2:#30d158;--c3:#5e5ce6;--c4:#ff9f0a;
+  --sh:none;--hi:none;--blur:0px;--r:16px;--rs:12px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Helvetica Neue",sans-serif
+}
+html[data-skin=dark] body{background:#000}
+html[data-skin=dark] .card,html[data-skin=dark] .card.stat{background:#1c1c1e;border:0;box-shadow:none}
+html[data-skin=dark] .card h3{font-weight:600}
+html[data-skin=dark] .top h2{font-size:30px;font-weight:700;letter-spacing:-.02em}
+html[data-skin=dark] .logo-dot{background:linear-gradient(135deg,#0a84ff,#5e5ce6);box-shadow:none}
+html[data-skin=dark] .hero{background:linear-gradient(135deg,#0a84ff 0%,#0066d6 45%,#5e5ce6 100%);box-shadow:none;border:0}
+html[data-skin=dark] .hero .bar{background:rgba(255,255,255,.25)}
+html[data-skin=dark] .hero .bar>i{background:#fff;box-shadow:none}
+html[data-skin=dark] .chip{color:#fff;background:var(--c);box-shadow:none;border-radius:8px}
+html[data-skin=dark] .btn{background:rgba(118,118,128,.24);border:0;color:#0a84ff;box-shadow:none;font-weight:600}
+html[data-skin=dark] .btn.pri,html[data-skin=dark] .btn.pri:hover{background:#0a84ff;color:#fff;box-shadow:none}
+html[data-skin=dark] .btn.bad{background:#1c1c1e;color:#ff453a}
+html[data-skin=dark] .subgo{box-shadow:none!important}
+html[data-skin=dark] .subtag{color:#0a84ff;background:rgba(10,132,255,.18);border:0}
+html[data-skin=dark] input,html[data-skin=dark] select,html[data-skin=dark] textarea{background:#1c1c1e;border:1px solid rgba(84,84,88,.6);color:#fff}
+html[data-skin=dark] input:focus,html[data-skin=dark] textarea:focus{border-color:#0a84ff}
+html[data-skin=dark] .li{border-bottom:.5px solid rgba(84,84,88,.6)}
+html[data-skin=dark] .li:last-child{border-bottom:0}
+html[data-skin=dark] .opt{background:#1c1c1e;border:0;box-shadow:none}
+html[data-skin=dark] .sheet .opt{background:#2c2c2e}
+html[data-skin=dark] .opt.on{box-shadow:0 0 0 2px #0a84ff inset}
+html[data-skin=dark] .plan{border:0;box-shadow:none}
+html[data-skin=dark] .plan.hot{box-shadow:0 0 0 2px #0a84ff}
+html[data-skin=dark] .plan .badge{background:#0a84ff}
+html[data-skin=dark] .plan .pr{background:none;-webkit-text-fill-color:currentColor;color:#fff}
+html[data-skin=dark] .seg-t{background:rgba(118,118,128,.24);border-radius:9px;padding:2px}
+html[data-skin=dark] .seg-t button{color:#fff;font-weight:500;border-radius:7px}
+html[data-skin=dark] .seg-t button.on{background:#636366;color:#fff;font-weight:600;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+html[data-skin=dark] .seg button{background:rgba(118,118,128,.24);border:0;color:#fff}
+html[data-skin=dark] .seg button.on{background:#0a84ff;color:#fff}
+html[data-skin=dark] .tag{border:0;background:rgba(118,118,128,.24);color:rgba(235,235,245,.6)}
+html[data-skin=dark] .tag.ok,html[data-skin=dark] .tag.bad,html[data-skin=dark] .tag.warn{border:0;background:color-mix(in srgb,currentColor 16%,transparent)}
+html[data-skin=dark] .tag:before{box-shadow:none!important}
+html[data-skin=dark] .node{background:#1c1c1e;border:0;box-shadow:none}
+html[data-skin=dark] .led,html[data-skin=dark] .led.off{box-shadow:none}
+html[data-skin=dark] .tabbar{background:rgba(22,22,24,.92);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid rgba(84,84,88,.6);box-shadow:none}
+html[data-skin=dark] .tabbar a{color:#8e8e93}
+html[data-skin=dark] .tabbar a.on{color:#0a84ff;font-weight:600}
+html[data-skin=dark] .tabbar a.on:before{display:none}
+html[data-skin=dark] .sheet{background:#1c1c1e;border:0}
+html[data-skin=dark] .sx{background:rgba(118,118,128,.24);border:0;color:rgba(235,235,245,.6)}
+html[data-skin=dark] .dlb{background:rgba(10,132,255,.2);color:#0a84ff}
+html[data-skin=dark] .ibtn{background:#1c1c1e;border:0;box-shadow:none;color:#0a84ff}
+html[data-skin=dark] .urlbox{background:#2c2c2e}
+html[data-skin=dark] .node .tag,html[data-skin=dark] .node .sub span{background:rgba(118,118,128,.24);border:0;color:rgba(235,235,245,.6)}
