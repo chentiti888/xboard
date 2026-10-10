@@ -360,18 +360,3 @@ html[data-skin=dark] .tabbar{background:rgba(44,44,46,.72);-webkit-backdrop-filt
 html[data-skin=dark] .tabbar a{color:#ebebf5}
 html[data-skin=dark] .tabbar a.on{color:#0a84ff;background:rgba(118,118,128,.28)}
 .main{padding-bottom:calc(62px + 48px + env(safe-area-inset-bottom))}
-/* v3.4 手机端紧凑一点 */
-@media (max-width:899px){
-  .main{padding-top:calc(6px + env(safe-area-inset-top))}
-  .top{margin-bottom:10px}
-  .card{margin-bottom:12px}
-  .grid2{gap:12px}
-  .grid2 .card{margin-bottom:0}
-  .grid2{margin-bottom:12px}
-  .stat{padding:12px 14px}
-  .stat .sh{margin-bottom:8px}
-  .hero{padding:16px 16px 14px}
-  .subc{padding:16px 16px 14px}
-  .subh{margin-bottom:12px}
-  .subgo{min-height:50px}
-}
