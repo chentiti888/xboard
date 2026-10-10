@@ -180,3 +180,8 @@ html[data-skin=light] .logo-dot{background:linear-gradient(135deg,#1e2a4a,#11182
 html[data-skin=dark] .btn.pri{background:var(--acb);color:#fff}
 html[data-skin=dark] .seg button.on{color:#fff}
 html[data-skin=dark] .hero{background:linear-gradient(135deg,#0e7490 0%,#2563eb 52%,#4338ca 100%)}
+
+/* v1.3 导航栏: 不透明 + 更大的底部留白, 避免遮挡/透出内容 */
+.main{padding-bottom:calc(var(--nav) + 64px + env(safe-area-inset-bottom))}
+html[data-skin=dark] .tabbar{background:#070b14;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 -10px 24px rgba(0,0,0,.45)}
+html[data-skin=light] .tabbar{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 -8px 20px rgba(15,23,42,.08)}
