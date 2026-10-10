@@ -250,7 +250,7 @@ function dlSheet() {
   var m = sheet('<h3>下载客户端</h3><div class="seg-t" style="margin-bottom:14px">' + ['ios', 'android', 'desktop'].map(function (k) { return '<button data-pf="' + k + '"' + (k === pf ? ' class="on"' : '') + '><span class="dli dli-s dl-' + k + '">' + ico({ ios: 'pios', android: 'pand', desktop: 'pc' }[k]) + '</span>' + names[k] + '</button>'; }).join('') + '</div><div id="dll"></div><div class="mut sm" id="dln" style="margin-top:6px"></div>');
   function show(k) {
     $$('[data-pf]', m).forEach(function (b) { b.classList.toggle('on', b.dataset.pf === k); });
-    $('#dll', m).innerHTML = L[k].map(function (c) { return '<a class="opt dlo" href="' + esc(c[2]) + '" target="_blank" rel="noopener"><span class="dli dl-' + k + '">' + ico({ ios: 'pios', android: 'pand', desktop: 'pc' }[k]) + '</span><span class="dlt"><b>' + esc(c[0]) + '</b>' + (c[1] ? '<span class="mut sm">' + esc(c[1]) + '</span>' : '') + '</span><span class="dlb">下载</span></a>'; }).join('');
+    $('#dll', m).innerHTML = L[k].map(function (c) { return '<a class="opt dlo" href="' + esc(c[2]) + '" target="_blank" rel="noopener"><span class="dlt"><b>' + esc(c[0]) + '</b>' + (c[1] ? '<span class="mut sm">' + esc(c[1]) + '</span>' : '') + '</span><span class="dlb">下载</span></a>'; }).join('');
     $('#dln', m).textContent = (k === 'ios' && L.ios === DLS.ios) ? '这些 App 不在中国区 App Store 上架,需要使用其他地区的 Apple ID 下载。' : '安装后回到首页点「一键导入」即可。';
   }
   $$('[data-pf]', m).forEach(function (b) { b.onclick = function () { show(b.dataset.pf); }; });

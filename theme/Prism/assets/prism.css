@@ -225,3 +225,4 @@ html[data-skin=light] .dlb{background:#111827}
 .dlo .dli{width:34px;height:34px;border-radius:10px;color:var(--tx);background:transparent;border:1px solid var(--bd)}
 .dlo .dli svg{width:18px;height:18px}
 html[data-skin] .dlo .dli{color:var(--tx);background:transparent;border-color:var(--bd)}
+.dlo{padding:14px 16px}
