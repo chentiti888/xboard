@@ -230,8 +230,7 @@ route(/^\/$/, function () {
     var left = daysLeft(sub.expired_at), exp = !sub.expired_at ? '长期有效' : date(sub.expired_at);
     var lt = left == null ? '' : left < 0 ? '已过期' : '剩余 ' + left + ' 天';
     var n0 = (notes && notes.data ? notes.data : notes || [])[0];
-    var hr = new Date().getHours(), hi = hr < 6 ? '夜深了' : hr < 12 ? '早上好' : hr < 18 ? '下午好' : '晚上好';
-    var html = top('', '') + '<div class="hello" style="margin:-4px 0 14px">' + hi + '<b>' + esc((info.email || '').split('@')[0]) + '</b></div>' +
+    var html = top('', '') +
       (n0 ? '<div class="card notice"><h3>' + esc(n0.title) + '</h3><div class="sm mut">' + md(n0.content) + '</div></div>' : '') +
       '<div class="card hero"><div class="k">' + (hasPlan ? esc(sub.plan ? sub.plan.name : '当前套餐') : '尚未订阅套餐') + ' · ' + esc(lt || exp) + '</div><div class="v">' + (hasPlan ? gb(Math.max(0, total - used)) + ' <small style="font-size:15px;font-weight:600">GB 剩余</small>' : '—') + '</div><div class="bar"><i style="width:' + pct.toFixed(1) + '%"></i></div><div class="row sm" style="margin-top:8px;opacity:.85"><span>已用 ' + bytes(used) + '</span><span>总量 ' + bytes(total) + '</span></div></div>' +
       '<div class="grid2">' + statCard('cal', 1, '到期时间', esc(exp), esc(lt)) +
